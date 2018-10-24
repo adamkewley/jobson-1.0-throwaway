@@ -1,5 +1,4 @@
-dist: precise
-sudo: required
+dist: trusty
 
 language: java
 
@@ -11,10 +10,14 @@ branches:
   - /\d+.\d+.\d+/  # tagged versions
   - /\d+.\d+.\d+-staging/  # staging area for tagged releases
 
+addons:
+  apt:
+    packages:
+    - python3
+    - python3-pip
+    - node
+
 before_install:
-- apt install python3
-- apt install node
-- apt install pip3
 - gem install fpm --version 1.10.0  # for creating OS packages
 
 script: mvn package
