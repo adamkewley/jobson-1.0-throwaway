@@ -25,6 +25,12 @@
             <artifactId>jobson-swagger</artifactId>
             <version>${version.jobsonswagger}</version>
             <type>json</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

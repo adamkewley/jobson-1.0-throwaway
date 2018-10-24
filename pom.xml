@@ -47,13 +47,34 @@
         </developer>
     </developers>
 
+    <properties>
+        <dropwizard.version>1.2.2</dropwizard.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-bom</artifactId>
+                <version>${dropwizard.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <modules>
+        <!-- Core code -->
         <module>jobson</module>
         <module>jobson-swagger</module>
-        <module>jobson-swagger-ui</module>
-        <module>jobson-nix</module>
-        <module>jobson-deb</module>
-        <module>jobson-docs</module>
         <module>jobson-ui</module>
+
+        <!-- Documentation -->
+        <module>jobson-swagger-ui</module>
+        <module>jobson-docs</module>
+
+        <!-- Packaging -->
+        <module>jobson-deb</module>
+        <module>jobson-nix</module>
     </modules>
 </project>
