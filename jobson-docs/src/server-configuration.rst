@@ -70,10 +70,10 @@ launches in its own working directory.
 .. list-table::
 
     * - Key
-        Default
-        Description
+      - Default
+      - Description
 
-      - ``enabled:``
+    * - ``enabled:``
       - ``true``
       - Indicates whether Jobson should remove working directories after execution
 
@@ -81,9 +81,16 @@ launches in its own working directory.
 ``users:``: Users Configuration
 -------------------------------
 
-| Key \| Default \| Description \|
-| ``file`` \| ``users`` \| Path to the ``users`` file. Used when
-  ``basic`` authentication is enabled \|
+.. list-table::
+
+    * - Key
+      - Default
+      - Description
+
+    * - ``file``
+      - ``users``
+      - Path to the ``users`` file. Used when ``basic`` authentication is enabled
+
 
 ``authentication:``: Authentication Configuration
 -------------------------------------------------
@@ -92,11 +99,16 @@ The relevant ``authentication:`` fields change based on what ``type:``
 of authentication that was specified. ``guest`` auth has different
 configuration requriements from ``jwt`` auth, for example.
 
-| Key \| Default \| Description \|
-| ``type:`` \| ``basic`` \| The type of authentication to use. Valid
-  values are ``basic``, ``guest``, and ``jwt``. \|
-| ``*`` \| N/A \| Other keys in ``authentication:`` depend on what
-  ``type:`` was specified (see below) \|
+.. list-table::
+
+    * - Key
+      - Default
+      - Description
+
+    * - ``type:``
+      - ``basic``
+      - The type of authentication to use. Valid values are ``basic``, ``guest``, and ``jwt``. Other keys in ``authentication:`` depend on what ``type:`` was specified (see below)
+
 
 ``type: guest``: Guest Authentication Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,8 +116,16 @@ configuration requriements from ``jwt`` auth, for example.
 With ``guest`` authentication, the server will accept all incoming and
 assign them a username of ``guestUserName``.
 
-| Key \| Default \| Description \|
-| guestUserName \| guest \| The username to assign to all requests \|
+.. list-table::
+
+    * - Key
+      - Default
+      - Description
+
+    * - ``guestUserName``
+      - guest
+      - The username to assign to all requests
+
 
 ``type: basic``: HTTP Basic Authentication Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,10 +137,15 @@ then be authenticated against entries in Jobson's ``users`` file (see
 TODO). Valid credentials shall be permitted to use the API. Invalid
 credentials shall be rejected.
 
-| Key \| Default \| Description \|
-| realm \| JobsonBasicAuth \| The "realm" given during the basic auth
-  scheme. For web-browser clients, this is usually displayed as a string
-  in the popup dialog \|
+.. list-table::
+
+    * - Key
+      - Default
+      - Description
+
+    * - ``realm``
+      - JobsonBasicAuth
+      - The "realm" given during the basic auth scheme. For web-browser clients, this is usually displayed as a string in the popup dialog
 
 ``type: jwt``: Stateless JSON Web Token (JWT) Authentication Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,25 +159,30 @@ credentials in the token provided the token was signed with
 ``secretKey`` (below). If the header is missing, or mis-signed, Jobson
 shall reject the request.
 
-| Key \| Default \| Description \|
-| secretKey: \| (no default) \| Should be a base64-encoded string. The
-  signature algorithm used by Jobson is "HS512" (from
-  `here <https://github.com/jwtk/jjwt/blob/master/src/main/java/io/jsonwebtoken/SignatureAlgorithm.java>`__),
-  which is a HMAC, SHA-512 algorithm \|
+.. list-table::
+
+    * - Key
+      - Default
+      - Description
+
+    * - ``secretKey``
+      - (no default)
+      - Should be a base64-encoded string. The signature algorithm used by Jobson is "HS512" (from `here <https://github.com/jwtk/jjwt/blob/master/src/main/java/io/jsonwebtoken/SignatureAlgorithm.java>`__), which is a HMAC, SHA-512 algorithm
+
 
 ``execution:``: Execution Configuration
 ---------------------------------------
 
-| Key \| Default \| Description \|
-| ``maxConcurrentJobs:`` \| 10 \| The number of applications that Jobson
-  is allowed to run concurrently. Jobs are queued if there there are
-  currently more than this number of applications running. \|
-| ``delayBeforeForciblyKillingJobs:`` \| PT10S \| An `ISO
-  8601 <https://en.wikipedia.org/wiki/ISO_8601#Durations>`__ duration
-  string that specifies how long Jobson should wait after sending a
-  ``SIGINT`` to an application (see
-  `signals <http://man7.org/linux/man-pages/man7/signal.7.html>`__)
-  before sending a ``SIGKILL``. A ``SIGKILL`` is guaranteed to kill an
-  application, but might result in a harsh exit. Some applications can
-  intelligently handle ``SIGINT``\ s, allowing them to cleanup
-  resources, but might take time to perform cleanup. \|
+.. list-table::
+
+    * - Key
+      - Default
+      - Description
+
+    * - ``maxConcurrentJobs:``
+      - 10
+      - The number of applications that Jobson is allowed to run concurrently. Jobs are queued if there there are currently more than this number of applications running.
+
+    * - ``delayBeforeForciblyKillingJobs:``
+      - PT10S
+      - An `ISO8601 <https://en.wikipedia.org/wiki/ISO_8601#Durations>`__ duration string that specifies how long Jobson should wait after sending a ``SIGINT`` to an application (see `signals <http://man7.org/linux/man-pages/man7/signal.7.html>`__) before sending a ``SIGKILL``. A ``SIGKILL`` is guaranteed to kill an application, but might result in a harsh exit. Some applications can intelligently handle ``SIGINT``\ s, allowing them to cleanup resources, but might take time to perform cleanup.
