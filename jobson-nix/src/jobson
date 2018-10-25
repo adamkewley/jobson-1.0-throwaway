@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -jar "${BASH_SOURCE%/*}/../share/java/jobson-${project.version}.jar" $@
+java -jar "${BASH_SOURCE%/*}/../share/java/jobson-JOBSON_VERSION.jar" $@

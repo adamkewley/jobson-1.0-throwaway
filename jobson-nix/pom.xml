@@ -50,28 +50,106 @@
 
     <build>
         <plugins>
-            <!-- Assemble components into a tarball -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>create-dist</id>
+                        <id>copy-jobson-jar-dependencies</id>
+                        <phase>validate</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
-                        <phase>package</phase>
+                        <configuration>
+                            <excludeArtifactIds>jobson-docs,jobson-ui</excludeArtifactIds>
+                            <includeScope>runtime</includeScope>
+                            <outputDirectory>${project.build.directory}/dependencies/jobson</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>unpack-docs</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jobson</groupId>
+                                    <artifactId>jobson-docs</artifactId>
+                                    <type>tar.gz</type>
+                                    <outputDirectory>${project.build.directory}/dependencies/jobson-docs</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>unpack-ui</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jobson</groupId>
+                                    <artifactId>jobson-ui</artifactId>
+                                    <type>tar.gz</type>
+                                    <outputDirectory>${project.build.directory}/dependencies/jobson-ui</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <descriptors>
-                        <descriptor>assembly.xml</descriptor>
-                    </descriptors>
-                    <tarLongFileMode>gnu</tarLongFileMode>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>create-dist-dir</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <exec executable="bash" failonerror="true">
+                                    <arg value="compile.sh"/>
+                                    <arg value="${project.build.directory}" />
+                                    <arg value="${project.artifactId}"/>
+                                    <arg value="${project.version}"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>package-into-tarball</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <tar destfile="${project.build.directory}/${project.artifactId}-${project.version}.tar.gz"
+                                     basedir="${project.build.directory}"
+                                     includes="${project.artifactId}-${project.version}/**"
+                                     compression="gzip"
+                                     longfile="gnu" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 
             <!-- Attach as artifact -->
             <plugin>

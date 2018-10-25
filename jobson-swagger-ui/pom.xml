@@ -52,7 +52,6 @@
                                 <artifactItem>
                                     <groupId>com.github.jobson</groupId>
                                     <artifactId>jobson-swagger</artifactId>
-                                    <version>${version.jobsonswagger}</version>
                                     <type>json</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
