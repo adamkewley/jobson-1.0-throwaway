@@ -10,45 +10,53 @@
         <version>1.0.0-dev.1</version>
     </parent>
 
-    <artifactId>jobson-docs</artifactId>
+    <artifactId>jobson-swagger-ui</artifactId>
+    <version>1.0.0-dev.1</version>
     <packaging>pom</packaging>
 
     <properties>
-        <version.jobsonswaggerui>1.0.0-dev.1</version.jobsonswaggerui>
+        <version.swaggerui>3.19.3</version.swaggerui>
+        <version.jobsonswagger>1.0.0-dev.1</version.jobsonswagger>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.github.jobson</groupId>
-            <artifactId>jobson-swagger-ui</artifactId>
-            <version>${version.jobsonswaggerui}</version>
-            <type>tar.gz</type>
+            <artifactId>jobson-swagger</artifactId>
+            <version>${version.jobsonswagger}</version>
+            <type>json</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Unpack API documentation into output -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>unpack</id>
+                        <id>copy-swagger-json-dependency-ready-for-compilation</id>
                         <phase>validate</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>copy</goal>
                         </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>com.github.jobson</groupId>
-                                    <artifactId>jobson-swagger-ui</artifactId>
-                                    <version>${version.jobsonswaggerui}</version>
-                                    <type>tar.gz</type>
+                                    <artifactId>jobson-swagger</artifactId>
+                                    <version>${version.jobsonswagger}</version>
+                                    <type>json</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/apidocs</outputDirectory>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <destFileName>swagger.json</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -62,70 +70,64 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
                 <executions>
+
                     <execution>
-                        <id>install-python-deps</id>
+                        <id>get-swagger-ui-from-npm</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <exec executable="pip3" failonerror="true">
-                                    <arg value="install" />
-                                    <arg value="-r" />
-                                    <arg value="requirements.txt" />
+                                <exec executable="npm" failonerror="true">
+                                    <arg value="install"/>
+                                    <arg value="--prefix"/>
+                                    <arg value="${project.build.directory}"/>
+                                    <arg value="swagger-ui-dist@${version.swaggerui}"/>
                                 </exec>
                             </target>
                         </configuration>
                     </execution>
 
                     <execution>
-                        <id>compile-sphinx-docs</id>
+                        <id>move-ui-and-swagger-into-appropriate-structure</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <exec executable="make" failonerror="true">
-                                    <arg value="html" />
-                                </exec>
+                                <copy todir="${project.build.directory}/${project.artifactId}-${project.version}">
+                                    <fileset dir="${project.build.directory}/node_modules/swagger-ui-dist"/>
+                                </copy>
+                                <copy file="${project.build.directory}/swagger.json"
+                                      tofile="${project.build.directory}/${project.artifactId}-${project.version}/swagger.json"/>
 
-                                <move file="${project.basedir}/target/html"
-                                      tofile="${project.basedir}/target/${project.artifactId}-${project.version}" />
-
-                                <!-- Copy the swagger docs into that dir -->
-                                <move todir="${project.build.directory}/${project.artifactId}-${project.version}/">
-                                    <fileset dir="${project.build.directory}/apidocs" />
-                                </move>
-
-                                <!-- Rename swagger docs to `apidocs` because the Sphinx docs link to that -->
-                                <move file="${project.build.directory}/${project.artifactId}-${project.version}/jobson-swagger-ui-${version.jobsonswaggerui}"
-                                      tofile="${project.build.directory}/${project.artifactId}-${project.version}/apidocs" />
+                                <replace file="${project.build.directory}/${project.artifactId}-${project.version}/index.html"
+                                         token="https://petstore.swagger.io/v2/swagger.json"
+                                         value="swagger.json"/>
                             </target>
                         </configuration>
                     </execution>
 
                     <execution>
-                        <id>package-documentation-into-tarball</id>
+                        <id>package-everything-into-tarball</id>
                         <phase>package</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <tar basedir="${project.basedir}/target"
+                                <tar destfile="${project.build.directory}/${project.artifactId}-${project.version}.tar.gz"
+                                     basedir="${project.build.directory}"
                                      includes="${project.artifactId}-${project.version}/**"
-                                     longfile="gnu"
-                                     destfile="${project.basedir}/target/${project.artifactId}-${project.version}.tar.gz"
-                                     compression="gzip" />
+                                     compression="gzip"/>
                             </target>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Attach as artifact -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
