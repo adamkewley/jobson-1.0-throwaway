@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ARTIFACT_ID=$1
+VERSION=$2
+NIX_VERSION=$3
+
+echo $NIX_VERSION

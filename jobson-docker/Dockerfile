@@ -1,28 +1,35 @@
 FROM ubuntu:16.04
 
+
+# Install 3rd-party dependencies
 RUN apt update && apt install -y \
     nginx \
     openjdk-8-jre \
     supervisor
 
-# Install jobson-nix as an opt dependency
+# Install jobson-nix
 COPY target/dependency/jobson-nix/. /usr
 RUN chmod +x /usr/bin/jobson
 
-# Install nginx config
+
+
+# Configure nginx
 COPY default.conf /etc/nginx/conf.d/default.conf
 RUN rm -rf /etc/nginx/sites-enabled/default
 
-# Setup server acct. + workspace area (home dir)
+# Configure supervisord
+COPY supervisord.conf /etc/supervisord.conf
+
+# Configure OS to have a 'jobson' account
 RUN groupadd -r jobson && useradd --no-log-init -r -g jobson jobson
 RUN mkdir -p /home/jobson && chown jobson:jobson /home/jobson
 
-# Create a jobson workspace in the jobson home dir
+# Configure 'jobson' account with a jobson workspace
 USER jobson
 RUN  cd /home/jobson && jobson new --demo  # so a blank img boot shows *something*
 USER root
 
-EXPOSE 80
 
-COPY supervisord.conf /etc/supervisord.conf
+
+EXPOSE 80
 CMD ["supervisord", "--configuration", "/etc/supervisord.conf", "--nodaemon"]

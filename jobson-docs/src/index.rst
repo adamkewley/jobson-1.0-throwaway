@@ -77,6 +77,35 @@ Jobson.
     specs
     commandline
     server-configuration
+
     template-expressions
     workspaces
     HTTP API <apidocs/index.html#://>
+
+
+
+
+
+TODO
+
+
+    Admins/developers configure Jobson with YAML spec files that describe each
+    application that Jobson should host:
+
+
+
+    At runtime, Jobson uses job specs to:
+
+    - Generate a standard HTTP API for running the application
+    - Execute the application (any language: it uses process forking)
+    - Collect application outputs
+    - Handle multithreading, signal forwarding, queueing, etc.
+
+    This enables application developers to write simple standalone command-line applications
+    without *also* needing to develop web infrastructure.
+
+Jobson was initially developed to automatically handle data requests for a satellite
+mission. The processing was done in a variety of languages, and a typical data request
+could run for multiple days. Jobson was developed to abstract webification and persistence
+parts of that problem space.
+
