@@ -67,6 +67,9 @@
                             <target>
                                 <exec executable="bash" failonerror="true">
                                     <arg value="repackage-nix-tarball.sh" />
+                                    <arg value="${project.artifactId}" />
+                                    <arg value="${project.version}" />
+                                    <arg value="${project.version}" />
                                 </exec>
                             </target>
                         </configuration>
@@ -85,6 +88,32 @@
                                     <arg value="${project.version}" />
                                 </exec>
                             </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Attach deb package as output artifact -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-output-tarball-as-build-artifact</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>
+                                        ${project.build.directory}/jobson_${project.version}_all.deb
+                                    </file>
+                                    <type>deb</type>
+                                </artifact>
+                            </artifacts>
                         </configuration>
                     </execution>
                 </executions>

@@ -16,9 +16,9 @@
     <dependencies>
         <dependency>
             <groupId>com.github.jobson</groupId>
-            <artifactId>jobson-nix</artifactId>
+            <artifactId>jobson-deb</artifactId>
             <version>1.0.0-dev.1</version>
-            <type>tar.gz</type>
+            <type>deb</type>
         </dependency>
     </dependencies>
 
@@ -34,16 +34,16 @@
                         <id>copy</id>
                         <phase>validate</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>copy</goal>
                         </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>com.github.jobson</groupId>
-                                    <artifactId>jobson-nix</artifactId>
-                                    <version>1.0.0-dev.1</version>
-                                    <type>tar.gz</type>
-                                    <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                                    <artifactId>jobson-deb</artifactId>
+                                    <type>deb</type>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <destFileName>jobson.deb</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -51,28 +51,11 @@
                 </executions>
             </plugin>
 
-            <!-- rename dependency so that the Dockerfile has it in place -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
                 <executions>
-                    <execution>
-                        <id>rename-tar-to-remove-version</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <exec executable="mv" failonerror="true">
-                                    <arg value="${project.build.directory}/dependency/jobson-nix-1.0.0-dev.1" />
-                                    <arg value="${project.build.directory}/dependency/jobson-nix" />
-                                </exec>
-                            </target>
-                        </configuration>
-                    </execution>
-
                     <execution>
                         <id>build-docker-image</id>
                         <phase>compile</phase>
@@ -94,7 +77,7 @@
             </plugin>
 
 
-            <!-- Push the image to docker central repo -->
+            <!-- TODO: Push the image to docker central repo -->
 
         </plugins>
     </build>

@@ -4,14 +4,13 @@ FROM ubuntu:16.04
 # Install 3rd-party dependencies
 RUN apt update && apt install -y \
     nginx \
-    openjdk-8-jre \
+    default-jre \
     supervisor
 
-# Install jobson-nix
-COPY target/dependency/jobson-nix/. /usr
-RUN chmod +x /usr/bin/jobson
-
-
+# Install jobson debian package
+COPY target/jobson.deb /tmp
+RUN dpkg -i /tmp/jobson.deb
+RUN rm /tmp/jobson.deb
 
 # Configure nginx
 COPY default.conf /etc/nginx/conf.d/default.conf
