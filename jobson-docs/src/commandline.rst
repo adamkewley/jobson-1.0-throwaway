@@ -41,5 +41,5 @@ The ``--help`` argument also works with the other subcommands:
       -h, --help             show this help message and exit
 
       
-TODO: More CLI documentation
-----------------------------
+**TODO: More CLI documentation**
+

@@ -20,90 +20,112 @@ Overview
 .. image:: _static/ui-arch.svg
 
 
-``jobson-ui`` is designed to be hosted as a set of static assets on a
-standard webserver. This enables admins to administer the end-user
-accessible parts of jobson with their own standard
-security/caching/authentication apporaches.
+``jobson-ui`` is a set of static web assets that should be hosted on a
+standard webserver. This enables admins to administer the user-facing
+API of jobson with their own standard security/caching/authentication
+apporaches.
 
-The webserver should serve the ``jobson-ui`` assets as static
-files. At runtime, browser clients go through the following steps:
+At runtime, browser clients go through the following steps:
 
-* Clients download ``index.html`` from webserver root
+* Clients download ``index.html`` (from ``jobson-ui``) from the
+  webserver
 * ``<script>`` tags in the HTML cause clients to download associated
-  javascript from webserver root
-* The javascript makes clients download ``config.json`` from webserver
-  root
+  javascript from the webserver
+* The javascript makes clients download ``config.json`` from the
+  webserver
 * ``config.json`` contains UI configuration options, including an
   ``apiPrefix`` property, which tells clients what to prefix jobson
   API requests with
-* Bootstrapping complete: the javascript code can now interact
-  with the ``jobson`` API by prefixing request paths with ``apiPrefix``
+* Subsequent ``jobson`` API calls are prefixed with ``apiPrefix``
+  (e.g. ``/api/{some-req}``)
 
-So, in order to host a UI you will need to:
-
-* Configure a standard webserver to host the ``jobson-ui`` assets
-* Change ``config.json`` (default: ``/api``) accordingly
-* Configure the webserver to forward any requests beginning with
-  ``apiPrefix`` to an active ``jobson`` server
-
-This guide assumes ``nginx`` is the webserver used.
+  
+This guide demonstrates configuring ``nginx`` to serve ``jobson-ui``
+as described.
 
 
-Get ``jobson-ui``
------------------
+Optional: Boot ``jobson`` somewhere
+-----------------------------------
 
-tl;dr (longer version `here <#longer-install-guide>`__):
+Deploying the UI doesn't require a running ``jobson`` server. However,
+for the sake of testing, this guide assumes you have a ``jobson``
+server running at ``localhost:8080``:
 
--  Download a
-   `release <https://github.com/adamkewley/jobson-ui/releases>`__
--  Unzip it onto a webserver (e.g. `nginx <https://www.nginx.com/>`__)
--  Configure the webserver to reverse-proxy requests beginning with
-   ``/api`` to a running
-   `Jobson <https://github.com/adamkewley/jobson>`__ server (`nginx
-   example </docs/nginx-example-config>`__)
--  *Optional*: Configure the webserver to reverse-proxy websocket
-   requests (`nginx example </docs/nginx-example-config>`__) . This is
-   only required if you want realtime updates in the UI.
--  Configure the UI by editing ``config.json`` (if necessary)
+.. code:: bash
+
+	  jobson serve config.yml  # config.yml is configured to serve on port 8080
+
+	  
+
+Get ``jobson-ui`` Assets
+------------------------
+
+Pre-packaged distributions (debian, unix) of the jobson platform
+include the assets at ``/share/jobson/ui/html``. Those assets are
+"ready to go" and should be copied/linked to an appropriate location
+(below).
+
+The `jobson project <https://github.com/adamkewley/jobson>`__ build
+also uploads ``jobson-ui`` as an independent artifact. If you just
+want the UI, you can download it from the `releases
+<https://github.com/adamkewley/jobson/releases>`__ page.
 
 
-Jobson UI builds into a set of standard, static, web assets. Those
-assets need to be hosted on a standard webserver (e.g.
-`nginx <https://www.nginx.com/>`__).
+Unpack/Move Assets to Webserver Root
+------------------------------------
 
-By default, all Jobson API requests made by the UI are prefixed with
-``/api``. This prefix can be changed by editing ``config.json``. Your
-webserver of choice should be configured with a reverse proxy that
-forwards all requests beginning with ``/api`` to a
-`Jobson <https://github.com/adamkewley/jobson>`__ server. Jobson UI uses
-websockets to listen to events (updates to stdio, new jobs, etc.), so
-the webserver should also be configured to forward websockets if you
-want dynamic updates in the UI.
+For this install guide, we will copy the assets to ``/var/www/jobson``:
 
-This step-by-step guide assumes `nginx <https://www.nginx.com/>`__ is
-the webserver:
+.. code:: bash
 
--  Download a
-   `release <https://github.com/adamkewley/jobson-ui/releases>`__ of
-   Jobson UI
--  Unzip the assets to the webserver's asset folder (e.g.
-   ``/var/www/jobson-ui``)
--  Install `nginx <https://www.nginx.com/>`__ (e.g.
-   ``sudo apt install nginx``)
--  Create an nginx config file for the site.
-   `This </docs/nginx-example-config>`__ is a starting point
--  Save the config file, ready for nginx (e.g. at
-   ``/etc/nginx/sites-available/jobson-ui``)
--  Enable the config file (e.g.
-   ``cd /etc/nginx/sites-enabled && ln -s ../sites-available/jobson-ui jobson-ui``)
--  Reload nginx (``nginx -s reload``)
-   
+	  cp -r /usr/share/jobson/ui/html /var/www/jobson
 
-Install ``nginx``
------------------
 
+	  
+Optional: Edit ``config.json``
+------------------------------
+
+If you want to change the ``apiPrefix``, edit the UI configuration file:
+
+.. code:: bash
+
+	  nano /var/www/jobson/config.json
+
+This will cause ``jobson`` API requests to go elsewhere. For this
+guide, we assume the default value (``/api``).
+
+	  
 Configure ``nginx``
 -------------------
 
+* Create an nginx config file for the site at
+  ``/etc/nginx/sites-available/jobson-ui``:
+
 .. literalinclude:: _static/nginx-example-config
     :linenos:
+
+* Enable the site configuration:
+
+.. code:: bash
+
+   cd /etc/nginx/sites-enabled
+   ln -s ../sites-available/jobson-ui jobson-ui
+
+* Reload nginx:
+
+.. code:: bash
+
+   nginx -s reload
+
+
+   
+Optional: Load the UI in a Browser
+----------------------------------
+
+Try loading the UI in a browser:
+
+.. code:: bash
+
+	  xdg-open http://localhost
+
+Which, if ``jobson`` is running, should work fine.
