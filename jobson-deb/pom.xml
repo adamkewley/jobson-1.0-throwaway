@@ -83,7 +83,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <exec executable="/bin/bash" failonerror="true">
+                                <exec executable="bash" failonerror="true">
                                     <arg value="${project.basedir}/make-deb-pkg.sh" />
                                     <arg value="${project.version}" />
                                 </exec>

@@ -29,6 +29,8 @@ execution:
 
 # Superfast Runthrough (Debian)
 
+See [quickstart](TODO) for more details.
+
 ```bash
 apt install openjdk-8-jre
 wget NIX_DIST
@@ -41,6 +43,8 @@ bin/jobson serve config.yml
 
 
 # Documentation
+
+TOC TODO
 
 - Overview
 - Install

@@ -13,11 +13,6 @@
     <artifactId>jobson-nix</artifactId>
     <packaging>pom</packaging>
 
-    <name>jobson-nix</name>
-    <description>
-        *nix (bash script + java) packaging for the jobson jar
-    </description>
-
     <dependencies>
         <dependency>
             <groupId>com.github.jobson</groupId>
