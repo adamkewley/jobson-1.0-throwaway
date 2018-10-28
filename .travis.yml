@@ -50,6 +50,7 @@ deploy:
   - jobson-ui/target/jobson-ui-${TRAVIS_TAG}.tar.gz
 
   on:
+    repo: adamkewley/jobson-1.0.0-throwaway
     tags: true
 
 # Update documentation site
