@@ -75,10 +75,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-            <!-- TODO: Push the image to docker central repo -->
-
         </plugins>
     </build>
 </project>

@@ -53,6 +53,10 @@ deploy:
     repo: adamkewley/jobson-1.0.0-throwaway
     tags: true
 
+# <!-- TODO docker push:
+#  - docker tag ${project.artifactId}:${project.version} adamkewley/jobson-1.0.0-throwaway
+#  - docker push adamkewley/jobson-1.0.0-throwaway -->
+
 # Update documentation site
 after_deploy: |
   git config --global user.email "travis@travis-ci.org"
