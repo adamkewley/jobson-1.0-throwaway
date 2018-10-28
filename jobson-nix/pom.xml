@@ -24,16 +24,6 @@
             <artifactId>jobson-docs</artifactId>
             <version>1.0.0-dev.1</version>
             <type>tar.gz</type>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.jobson</groupId>
-                    <artifactId>jobson-swagger-ui</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.jobson</groupId>
-                    <artifactId>jobson-swagger</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.jobson</groupId>

@@ -4,20 +4,21 @@ Quickstart
 Jobson's initial setup is inspired by `Ruby on
 Rails <//rubyonrails.org>`__, where the command-line is used to generate
 and launch convention-over-configuration projects (in Jobson,
-`workspaces <workspaces.md>`__).
+`workspaces <workspaces.html>`__).
 
-1) Install
-----------
+   
+Install
+-------
 
-Follow Jobson's main `README <https://github.com/adamkewley/jobson>`__
-for installation steps.
+View the `install <install.html>`__ page.
 
-2) Test Jobson's Command-Line Interface
----------------------------------------
 
-This guide uses Jobson's command-line to get going. It should be
-available if you have installed Jobson correctly. Ensure you can run it,
-for example, by showing its help pages:
+Test Jobson's Command-Line Interface
+------------------------------------
+
+This guide uses Jobson's command-line, which should be available if
+you have installed Jobson correctly. Ensure you can run it, for
+example, by showing its help pages:
 
 .. code:: bash
 
@@ -26,12 +27,13 @@ for example, by showing its help pages:
 More details about the command-line interface can be found
 `here <commandline.html>`__.
 
-3) Generate a Workspace
------------------------
 
-Workspaces Jobson's way of organizing its configuration and data. The
-``new`` command generates a barebones workspace containing the minimum
-necessary files to run a Jobson server:
+Generate a Workspace
+--------------------
+
+Workspaces are Jobson's way of organizing its configuration and
+data. The ``new`` command generates a barebones workspace containing
+the minimum necessary files to run a Jobson server:
 
 .. code:: bash
 
@@ -48,12 +50,13 @@ necessary files to run a Jobson server:
 
 More details about workspaces can be found `here <workspaces.html>`__.
 
-4) Generate a Job Spec
-----------------------
 
-Job specs standard YAML files that describe an application. They are
-held in the ``specs/`` folder in a workspace. The ``generate spec``
-command generates a new job spec:
+Generate a Job Spec
+-------------------
+
+Job specs are standard YAML files that describe an application. They
+are held in the ``specs/`` folder in a workspace. The ``generate
+spec`` command generates a new job spec:
 
 .. code:: bash
 
@@ -63,8 +66,9 @@ command generates a new job spec:
 
 More details about job specs can be found `here <specs.html>`__.
 
-5) Edit the Job Spec to match the Application
----------------------------------------------
+
+Edit the Job Spec to match the Application
+------------------------------------------
 
 For the sake of this guide, lets assume you want Jobson to host a python
 script takes two inputs, prints something to the standard output (via
@@ -140,10 +144,11 @@ This example is describing a job that:
    that file under the ID ``outputFile``
 
 More details about `job specs <specs.html>`__ and `template
-expressions <template-expressions.html>`__ are available at the links.
+expressions <specs.html#template-strings>`__ are available at the links.
 
-5) *Optional*: Validate and Run a Job Against the Job Spec
-----------------------------------------------------------
+
+*Optional*: Validate and Run a Job Against the Job Spec
+-------------------------------------------------------
 
 The job spec can be validated by Jobson to check for basic syntactical
 errors. The ``validate spec`` command will exit with no output if your
@@ -203,8 +208,9 @@ command-line, which lets you debug runtime errors more easily.
 We've now created a job spec, validated it, and ran it locally, all
 that's left is to host it.
 
-8) Boot the Server
-------------------
+
+Boot the Server
+---------------
 
 With a working job spec in place, we're ready to boot a server. The
 ``serve`` command should be ran from the workspace:
@@ -216,8 +222,9 @@ With a working job spec in place, we're ready to boot a server. The
 More details about the server configuration (``config.yml``) are
 available `here <server-configuration.html>`__.
 
-9) Verify the Server's Working
-------------------------------
+
+Verify the Server's Working
+---------------------------
 
 The server is then running, which you can verify with a HTTP tool such
 as ``curl``:
@@ -235,6 +242,7 @@ valid API request. Therefore, you can also ``POST`` it via the HTTP API:
     $ curl --data @request.json -H 'Content-Type: application/json' localhost:8080/v1/jobs
     {"id":"svpj5ppevn","_links":{"outputs":{"href":"/v1/jobs/svpj5ppevn/outputs"},"inputs":{"href":"/v1/jobs/svpj5ppevn/inputs"},"self":{"href":"/v1/jobs/svpj5ppevn"},"spec":{"href":"/v1/jobs/svpj5ppevn/spec"}}}
 
+    
 What's Next?
 ------------
 
@@ -247,10 +255,7 @@ queueing, concurrency, etc.
 Now that you've seen the general idea behind Jobson, there's several
 steps you can take:
 
--  **Add a user interface**: The `Jobson
-   UI <https://github.com/adamkewley/jobson-ui>`__ project uses job
-   specs to generate a website that can be used by anyone with a
-   browser.
+-  **Add a user interface**: ``jobson`` only hosts a JSON API, you will need to install a `User Interface <ui.html>`__ to view the jobs. 
 
 -  **Customize the server**: See `Server
    Configuration <server-configuration.html>`__

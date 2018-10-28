@@ -4,7 +4,7 @@ Command-Line Interface
 The command-line interface (CLI) for Jobson, ``jobson``, contains
 commands aimed at day-to-day development and administration of Jobson.
 The CLI is available once jobson has been
-`installed <https://github.com/adamkewley/jobson>`__.
+`installed <install.html>`__.
 
 Viewing Help with ``--help``
 ----------------------------
@@ -40,5 +40,6 @@ The ``--help`` argument also works with the other subcommands:
       --demo                 Generate application with a demo spec (default: false)
       -h, --help             show this help message and exit
 
-HELP TODO: The in-CLI documentation explains the commands, but having
-the documentation here also would be useful to devs.
+      
+TODO: More CLI documentation
+----------------------------
