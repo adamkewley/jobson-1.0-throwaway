@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Jobson &mdash; jobson-docs  documentation</title>
+  <title>Command-Line Interface &mdash; jobson-docs  documentation</title>
   
 
   
@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How It Works" href="how-it-works.html" /> 
+    <link rel="next" title="Server Configuration" href="server-configuration.html" />
+    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -47,7 +48,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> jobson-docs
+            <a href="index.html" class="icon icon-home"> jobson-docs
           
 
           
@@ -78,11 +79,14 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="how-it-works.html">How It Works</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commandline.html">Command-Line Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command-Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#viewing-help-with-help">Viewing Help with <code class="docutils literal notranslate"><span class="pre">--help</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="server-configuration.html">Server Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workspaces.html">Workspaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs.html">Job Specs</a></li>
@@ -104,7 +108,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">jobson-docs</a>
+          <a href="index.html">jobson-docs</a>
         
       </nav>
 
@@ -133,15 +137,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Jobson</li>
+      <li>Command-Line Interface</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/commandline.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -154,25 +158,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="jobson">
-<h1>Jobson<a class="headerlink" href="#jobson" title="Permalink to this headline">¶</a></h1>
-<p>Jobson is a webserver that automates the most common steps required to
-build a web service around a batch application.</p>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="how-it-works.html">How It Works</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commandline.html">Command-Line Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="server-configuration.html">Server Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workspaces.html">Workspaces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="specs.html">Job Specs</a></li>
-<li class="toctree-l1"><a class="reference external" href="apidocs/index.html#://">HTTP API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface (Jobson UI)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Developer’s Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Usage</a></li>
-</ul>
+  <div class="section" id="command-line-interface">
+<h1>Command-Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>The command-line interface (CLI) for Jobson, <code class="docutils literal notranslate"><span class="pre">jobson</span></code>, contains
+commands aimed at day-to-day development and administration of Jobson.
+The CLI is available once jobson has been
+<a class="reference external" href="install.html">installed</a>.</p>
+<div class="section" id="viewing-help-with-help">
+<h2>Viewing Help with <code class="docutils literal notranslate"><span class="pre">--help</span></code><a class="headerlink" href="#viewing-help-with-help" title="Permalink to this headline">¶</a></h2>
+<p>Pass the <code class="docutils literal notranslate"><span class="pre">--help</span></code> argument to <code class="docutils literal notranslate"><span class="pre">jobson</span></code> to view the help
+documentation for a particular command.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ jobson --help
+usage: java -jar jobson-0.0.11.jar
+       [-h] [-v] {server,check,new,generate,users,validate,run} ...
+
+positional arguments:
+  {server,check,new,generate,users,validate,run}
+                         available commands
+
+optional arguments:
+  -h, --help             show this help message and exit
+  -v, --version          show the application version and exit
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> argument also works with the other subcommands:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ jobson new --help
+usage: java -jar jobson-0.0.11.jar
+       new [--demo] [-h]
+
+generate a new jobson deployment in the current working directory
+
+optional arguments:
+  --demo                 Generate application with a demo spec (default: false)
+  -h, --help             show this help message and exit
+</pre></div>
+</div>
+<p><strong>TODO: More CLI documentation</strong></p>
 </div>
 </div>
 
@@ -184,8 +205,10 @@ build a web service around a batch application.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="how-it-works.html" class="btn btn-neutral float-right" title="How It Works" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="server-configuration.html" class="btn btn-neutral float-right" title="Server Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="quickstart.html" class="btn btn-neutral" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
