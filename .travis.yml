@@ -1,15 +1,12 @@
 dist: trusty
-
 language: java
-
 branches:
   only:
   - master
   - dev
-  - /feature-*/  # feature branches
-  - /\d+.\d+.\d+/  # tagged versions
-  - /\d+.\d+.\d+-staging/  # staging area for tagged releases
-
+  - "/feature-*/"
+  - "/\\d+.\\d+.\\d+/"
+  - "/\\d+.\\d+.\\d+-staging/"
 addons:
   apt:
     packages:
@@ -17,30 +14,21 @@ addons:
     - python3-pip
     - node
     - docker
-
 before_install:
-- gem install fpm --version 1.10.0  # for creating OS packages
+- gem install fpm --version 1.10.0
 - pip3 install --user --upgrade pip virtualenv
 - virtualenv -p python3 venv
 - source venv/bin/activate
 - pip3 install -r jobson-docs/requirements.txt
-
-
 script: mvn package
-
 env:
   global:
-    # travis encrypt GH_TOKEN=API_KEY
-    secure: "Y1TAIbGjkgL9VAuVfCMepY3JvpkLzhqJ0yVQOsRZohN3Tm/6W3uc0c+AkAzmfrH8yuMtzT51NPytETc5xyIwNTWrFZsCxcu2mpiLhufQpmajWmq/pZ08jvnamsyrO8L33IYiz+mYTJiYdEXvCH657HdhVaXWtGhwyEXPEDxN6NxiX6gNxi+hDi30eJoljro3wfld2Me5sYQSkICF1W/gg7z/knG0am4NpIJJoJLnp3lVwFubLvBTOHq1lq/INctOmFSs46mM0QXqqfVTXuFjfzER+vf4zsS9/DQkYEQzsYrbb6YcdVI/m8llci8MphOZnmq/0e0X5rEu43s5WTEl2XaH5pgtGPPAKk5h6NgwuZWxBOfrjE5GLOJ81ZXhrtu4cjMb77U+I+L0xVDSXXJPBP5FhUyBO9wMwrJpW8Gmz6gIrPF1q+DC5BNm7c/2InTev0T6IotdlWM0JjpbSjtVsLlcAL7M7IaFP3PoEs+ruX2DCLLTKFPszphNvWfiDSCGf9pOcF3EXhmJN0UDBl5feves5xkOZ/2gHHuoZMk/4pVvmMpappMkBqVSI37oHu9C1WsMrv9awfBnEb8gj1/d9yM8oXMWXtgxyfdDo/4Of5BfFghsgMPq+7LXg3HYs8fCwb5ew4/qqWVesWAgInOwN0zT0X+G/SbAnj7LZxZ/mjg="
-
+    secure: Y1TAIbGjkgL9VAuVfCMepY3JvpkLzhqJ0yVQOsRZohN3Tm/6W3uc0c+AkAzmfrH8yuMtzT51NPytETc5xyIwNTWrFZsCxcu2mpiLhufQpmajWmq/pZ08jvnamsyrO8L33IYiz+mYTJiYdEXvCH657HdhVaXWtGhwyEXPEDxN6NxiX6gNxi+hDi30eJoljro3wfld2Me5sYQSkICF1W/gg7z/knG0am4NpIJJoJLnp3lVwFubLvBTOHq1lq/INctOmFSs46mM0QXqqfVTXuFjfzER+vf4zsS9/DQkYEQzsYrbb6YcdVI/m8llci8MphOZnmq/0e0X5rEu43s5WTEl2XaH5pgtGPPAKk5h6NgwuZWxBOfrjE5GLOJ81ZXhrtu4cjMb77U+I+L0xVDSXXJPBP5FhUyBO9wMwrJpW8Gmz6gIrPF1q+DC5BNm7c/2InTev0T6IotdlWM0JjpbSjtVsLlcAL7M7IaFP3PoEs+ruX2DCLLTKFPszphNvWfiDSCGf9pOcF3EXhmJN0UDBl5feves5xkOZ/2gHHuoZMk/4pVvmMpappMkBqVSI37oHu9C1WsMrv9awfBnEb8gj1/d9yM8oXMWXtgxyfdDo/4Of5BfFghsgMPq+7LXg3HYs8fCwb5ew4/qqWVesWAgInOwN0zT0X+G/SbAnj7LZxZ/mjg=
 deploy:
   provider: releases
-  # travis encrypt < api-key
   api_key:
-    secure: "K83i6uOvXpMgOeCgrI3n9KDfeK+7/LoyvldHQiXBT7fo0D8V3lrxpJS7krguVXw6O/kvqNLM8+n7KnesmD8Q8gSZtPepWHGNw6EqVVXk8+1qINZimF/QeWp0QtplMrvczlkuqM0JWog50qIicmpsCqmNLLp5gaYVerqvrtQ3aVMdqfzAcjHIYKv2RFSqXnkHD7X4w2WW32hyq2lgHQAuSosVKgoN3vPcn4stvC9dJi7U951HUyRjH5UEhR651sVeU0Pb+lOntAHwGFot6U4XyobZmCrnrZsAJxBM34cpVyxP5ERwYpj+Wf4/kK7ZiPG4OV3oE0JOus5F1buynibS/cGOH1YCCRepv+1j5rRe8kerVGKFIwvSS21GNhRj0apZyPl00OvKVfMBEkKQ85BhzWf4RGm2I8H/eoAlwWYE0Lxj0HV99q+X0xDg/p3nccodXSQK+xDiGD2LXE1k9dnMFYAAWWueN8baIJkipN6NTlIyPApQkRoLlyZ7VNUxb590fJG3qPLOQewHCNoowJETSzSCfFQNVVlOTBlbCKIlpacR3oJ3/0Klv51rGH2LHK7rQsKWfm5Ly23sMpFt8Hf73mXldrT4l0AA0to9+8t1W5indVLZJGwxJnyLQ2kKrX0i8d5VpKRFErBq5U8GDDJmNrNhFPlotplBsPKkboptdCI="
-
+    secure: Lt3KHY0yHJe//hpEeoeWAxhp1HrIppaT9EWZUNfA/fHvtiFYLj3ng0T5lsrpG1BQvAclVlGH1yq6PRo+ymKeG4jHAmlfxj4y9sGueBI/rTvOozPHDChBqbMrp5R0LdaH8uHZEzmeUhWJ13hcFbGaCqAPkiEHafV8q5Bu7rM4HH/A4Ah/ltvcF+efWJuOfRPZ7ccpYRR9KhCN4VkN3+AwrHBSgYw8MMIgwRAaDC4KLTrdzYD+3vG+TeKZxQ9z+LDhbzQT61bqaTJK9cWLyCRysouU1wVcGQ7+Un25c7eJqXBrHGHfnynzuHNCOueLaJtJz4Y8pmsnTfuhc003mOGm7v+hQhNx7oYHXozCIxHjjc2o2JTOHoll1wC9TNBijLR1bWx5iBgVt0CaIyvNwpXgJlwZ7VYSNH4fNF760X4way6FovG17m3XL6ql9tEoO2dQwsefZHQk+xgppm5hpncRWfsE29WS9KT+copvAO/RYEA3mlL3kUhCpPpGqxqt7bwY3s43bb3DqTeeyD+TSdd4KZb7hVVyCWEuukOgMxbtVAQmaBhMitxmFdryyDT9liF53Og1KmtcR7TjQz9sWkJ/CfsUfdUV8CS1JPKRcPCPtmKtlXt8J/GjGagGFryJHn2mgsLvxv8ZZYGx4o1iInzGxRhMpx8hl4aRhHkuAMD9CZM=
   skip_cleanup: true
-
   file:
   - jobson/target/jobson-${TRAVIS_TAG}.jar
   - jobson-swagger/target/jobson-swagger-${TRAVIS_TAG}.json
@@ -48,16 +36,11 @@ deploy:
   - jobson-docs/target/jobson-docs-${TRAVIS_TAG}.tar.gz
   - jobson-nix/target/jobson-nix-${TRAVIS_TAG}.tar.gz
   - jobson-deb/target/jobson_${TRAVIS_TAG}_all.deb
-
   on:
     repo: adamkewley/jobson-1.0-throwaway
     tags: true
-
-# <!-- TODO docker push:
-#  - docker tag ${project.artifactId}:${project.version} adamkewley/jobson-1.0.0-throwaway
-#  - docker push adamkewley/jobson-1.0.0-throwaway -->
-
-# Update documentation site
+  api-key:
+    secure: Lt3KHY0yHJe//hpEeoeWAxhp1HrIppaT9EWZUNfA/fHvtiFYLj3ng0T5lsrpG1BQvAclVlGH1yq6PRo+ymKeG4jHAmlfxj4y9sGueBI/rTvOozPHDChBqbMrp5R0LdaH8uHZEzmeUhWJ13hcFbGaCqAPkiEHafV8q5Bu7rM4HH/A4Ah/ltvcF+efWJuOfRPZ7ccpYRR9KhCN4VkN3+AwrHBSgYw8MMIgwRAaDC4KLTrdzYD+3vG+TeKZxQ9z+LDhbzQT61bqaTJK9cWLyCRysouU1wVcGQ7+Un25c7eJqXBrHGHfnynzuHNCOueLaJtJz4Y8pmsnTfuhc003mOGm7v+hQhNx7oYHXozCIxHjjc2o2JTOHoll1wC9TNBijLR1bWx5iBgVt0CaIyvNwpXgJlwZ7VYSNH4fNF760X4way6FovG17m3XL6ql9tEoO2dQwsefZHQk+xgppm5hpncRWfsE29WS9KT+copvAO/RYEA3mlL3kUhCpPpGqxqt7bwY3s43bb3DqTeeyD+TSdd4KZb7hVVyCWEuukOgMxbtVAQmaBhMitxmFdryyDT9liF53Og1KmtcR7TjQz9sWkJ/CfsUfdUV8CS1JPKRcPCPtmKtlXt8J/GjGagGFryJHn2mgsLvxv8ZZYGx4o1iInzGxRhMpx8hl4aRhHkuAMD9CZM=
 after_deploy: |
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "Travis CI"
