@@ -51,6 +51,7 @@ after_deploy: |
   mv jobson-docs-${TRAVIS_TAG}/* gh-pages
 
   cd gh-pages
+  touch .nojekyll
   git add -A
   git commit -m "Updated docs for ${TRAVIS_TAG}"
   git remote add origin-pages https://${GH_TOKEN}@github.com/adamkewley/jobson-1.0-throwaway.git > /dev/null 2>&1
