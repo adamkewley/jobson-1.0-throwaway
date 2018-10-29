@@ -21,4 +21,4 @@ fpm \
     \
     -s dir \
     -t deb \
-    jobson-deb-1.0.0-dev.1/usr=/
+    jobson-deb-${VERSION}/usr=/
