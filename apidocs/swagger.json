@@ -1015,10 +1015,10 @@
         "number" : {
           "type" : "boolean"
         },
-        "containerNode" : {
+        "valueNode" : {
           "type" : "boolean"
         },
-        "valueNode" : {
+        "containerNode" : {
           "type" : "boolean"
         },
         "missingNode" : {
