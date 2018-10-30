@@ -7,16 +7,16 @@
     <parent>
         <groupId>com.github.jobson</groupId>
         <artifactId>jobson-project</artifactId>
-        <version>1.0.0-dev.3</version>
+        <version>1.0.0-dev.4</version>
     </parent>
 
     <artifactId>jobson-swagger-ui</artifactId>
-    <version>1.0.0-dev.3</version>
+    <version>1.0.0-dev.4</version>
     <packaging>pom</packaging>
 
     <properties>
         <version.swaggerui>3.19.3</version.swaggerui>
-        <version.jobsonswagger>1.0.0-dev.3</version.jobsonswagger>
+        <version.jobsonswagger>1.0.0-dev.4</version.jobsonswagger>
     </properties>
 
     <dependencies>
