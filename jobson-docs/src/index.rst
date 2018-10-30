@@ -18,5 +18,3 @@ build a web service around a batch application.
     HTTP API <apidocs/index.html#://>
     ui
     build
-    examples
-
