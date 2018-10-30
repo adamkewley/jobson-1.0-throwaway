@@ -16,6 +16,12 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import xml.etree.ElementTree as ET
+t = ET.parse('../pom.xml')
+ns = {
+    'pom': 'http://maven.apache.org/POM/4.0.0'
+}
+
 
 # -- Project information -----------------------------------------------------
 
@@ -26,7 +32,7 @@ author = 'Adam Kewley'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = ''
+release = t.find('./pom:version', ns).text
 
 
 # -- General configuration ---------------------------------------------------

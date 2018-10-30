@@ -25,11 +25,6 @@ These configuration files are used by Jobson to automatically:
 * Execute the job as a subprocess
 * Persist the job's output.
 
-With this approach, admins can add new jobs to Jobson in a familiar
-markup language (YAML) without *also* needing to know about specific
-execution languages, HTTP APIs, persistence, etc.
-
-
 
 Execution: Subprocesses
 -----------------------
@@ -46,10 +41,6 @@ a black box that:
   continuous outputs via pipes (e.g. ``stdout``, ``stderr``)
 * Exits with an exit code
 * Produces files as a side-effect
-
-With this approach, Jobson is able to execute any application, written
-in any langugage, with sandboxing that is guaranteed by the host
-operating system.
 
 
 Client Interaction: HTTP/Websockets
