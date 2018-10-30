@@ -40,6 +40,29 @@ The ``--help`` argument also works with the other subcommands:
       --demo                 Generate application with a demo spec (default: false)
       -h, --help             show this help message and exit
 
+
+
+Adding a new User (basic auth)
+------------------------------
+
+The ``users`` subcommand can be used to add new users to the system:
+
+.. code:: bash
+
+    $ jobson users add config.yml -p PASSWORD USERNAME
+
+
+This command appends an entry to the file pointed at by the ``users.file``
+setting in the server config (``config.yml``). The entry is hashed in a
+similar way to how Linux passwords are hashed, preventing the password from
+being read:
+
+.. code:: bash
+
+    $ cat users
+    USERNAME:basic:$6$XbPs6uOo$7AYilI2.iL84jLxXqb10vnzGygtXWCy1W27EUU7AhbKrDrtHGSI1jTRCIlUUmMhDzdwZ0sS7vm7iBrJ1VV6JB.
+
+
       
 **TODO: More CLI documentation**
 
