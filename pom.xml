@@ -51,6 +51,8 @@
         <dropwizard.version>1.2.2</dropwizard.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <docker.user>adamkewley</docker.user>
+        <docker.repo>jobson-1.0.0-throwaway</docker.repo>
     </properties>
 
     <dependencyManagement>

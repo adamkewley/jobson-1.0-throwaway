@@ -42,7 +42,9 @@
                                     <groupId>com.github.jobson</groupId>
                                     <artifactId>jobson-deb</artifactId>
                                     <type>deb</type>
-                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <outputDirectory>
+                                        ${project.build.directory}
+                                    </outputDirectory>
                                     <destFileName>jobson.deb</destFileName>
                                 </artifactItem>
                             </artifactItems>
@@ -65,10 +67,12 @@
                         <configuration>
                             <target>
                                 <exec executable="docker" failonerror="true">
-                                    <arg value="build" />
-                                    <arg value="-t" />
-                                    <arg value="${project.artifactId}:${project.version}" />
-                                    <arg value="." />
+                                    <arg value="build"/>
+                                    <arg value="-t"/>
+                                    <arg value="${docker.user}/${docker.repo}:${project.version}"/>
+                                    <arg value="-t"/>
+                                    <arg value="${docker.user}/${docker.repo}:latest"/>
+                                    <arg value="."/>
                                 </exec>
                             </target>
                         </configuration>

@@ -25,6 +25,8 @@ env:
   global:
   # travis encrypt GH_TOKEN=tok
   - secure: at1grzYy9RfcIfmoACdaSiY+u+RBDGfk07jCAB2Bn8bEohv21Ny45Is4F3G6Nb9XN7LJdM+6cVINBdsTOKQlIIo0t6nD0sMfkb9IvFP5waDodjTu9Bb8hW2b/7Ul49ANQBErB5f0HxioqGnXvZvrln9UM2Dcml6Sa+1TR+OAkO79cWbiOfRyNbXbC2B1RNl8JNfFOhMhQF/8zE2hpVVW8BQX3V7cBQ+pxLP7X8qEbmifg4HlAkPP31PZn1wIlfdBFG57ODiEWOobO/MkrpbW4V+SAgJkZgW797XbmsE5CUhrtQWiYvze4ZsBknIdSDgD7AXYUDtvJW17jQXFvI5dA8YYdmJfiV5iGRFgMq+5I/1WnSg0OD82NNdYK9YnDKXwjnKObFR5CPJEITT5dMKLnNGSZnTawAfIqXr7rlxETF6UwzMVQl9rvPMK29x3TeqjOgwTVL+MsC0iIkDrh2QGQgzEn1nmfiTHMXLh4nARWoe7q01AfXM5zcp0jhib6yjwQjqT4kc8BQ8SiVLxZq8qD6TQhi7cnCjKaAw9gadJ1cKaNp4dJNsSfMa9oq1LhwukcaZ6VHJIwY9OSVnvC3o4EC+lTfwmztJy/neuZ9h7q71O7MZ6JYRXS+IX4h/ubeV9l6V2yFdgfbb3noNzHs5i39bPa2li89JOoIPMZzpPepc=
+  # travis encrypt DOCKER_PASSWORD=pw
+  - secure: kawEWOndc88HaE0L3ylHFnQx3+pdZIopwtYMNJCa1UcOs84OXRtrIQcPiEOcpa5yIoZB/R+BgdVMO9M0MiEmbhggplJNf56RZvafr2zJSzgl7tbhrakIa81Ve+7IBHWMCL2VJQifiRbhm1/J84OFvNfLwtKJvjbbCnO/E9nsCUva193J5hkiipPVVmKm5iJ31JkeP0F/NqGmpJZn/r9yM/jOXstfVI4cM9AY0WDZzdA7yWWytGorVAqWNBIgQ4FG9YlfpEcnOmpSGgBDNRVlFKFvZw2ORPZWpiZiPJAiuZ1DPMgJIJYjqqkzoH9v1AWqTIRlWI7E0wLYBc1XCHrARUqZcmH20vRYA6XCQG4blF94F7X0ju9IQm4XjeyOmCK8xLCRFAZdmiZAIHlv3ItYDcggHpqeeHSSc7XnCHiAc/0iCz0jZxWY4AYJM9PPU55NzAgNVfm7Jd3WqGpEuyyR5L4ZQ+XJzcixadNr1uvGEBs5xmUQ4n8X6InVnw0LNcn6u75gbpFmVMarzeXVzWyjvtC3kqnBvWzqlDWj1cQIjlQRn3N52K2XNOFJ49YVV6k7LWlhRR7JPG4Z1qH9E6uqWIWXGNmQxjpGqebJ1LxstCJklzdwCaCH2pxhAG1JVzQNCQ7clbl+B2+wptLpOtCG44yHWItFKL12FYy47qHi+oI=
 deploy:
   provider: releases
   skip_cleanup: true
@@ -60,4 +62,6 @@ after_deploy: |
   git remote add origin-pages https://${GH_TOKEN}@github.com/adamkewley/jobson-1.0-throwaway.git > /dev/null 2>&1
   git push origin-pages gh-pages
 
-  
+  docker login --username "adamkewley" --password "$DOCKER_PASSWORD"
+  docker push adamkewley/jobson-1.0.0-throwaway:${TRAVIS_TAG}
+  docker push adamkewley/jobson-1.0.0-throwaway:latest
