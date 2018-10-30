@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Install &mdash; jobson-docs  documentation</title>
+  <title>Install &mdash; jobson-docs 1.0.0-dev.3 documentation</title>
   
 
   
@@ -96,7 +96,6 @@
 <li class="toctree-l1"><a class="reference external" href="apidocs/index.html#://">HTTP API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface (Jobson UI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Developer’s Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Usage</a></li>
 </ul>
 
             
@@ -170,34 +169,43 @@ etc.</p>
 <h2>Debian OSes (Ubuntu, Mint, etc.)<a class="headerlink" href="#debian-oses-ubuntu-mint-etc" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">jobson</span></code> build produces a <code class="docutils literal notranslate"><span class="pre">.deb</span></code> file that can be installed
 directly:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">install</span> <span class="n">openjdk</span><span class="o">-</span><span class="mi">8</span><span class="o">-</span><span class="n">jre</span>
-<span class="n">wget</span> <span class="n">JOBSON</span> <span class="n">DEB</span>
-<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">JOBSON</span> <span class="n">DEB</span>
-</pre></div>
-</div>
+<pre class="literal-block">
+wget <a class="reference external" href="https://github.com/adamkewley/jobson-1.0-throwaway/releases/download/">https://github.com/adamkewley/jobson-1.0-throwaway/releases/download/</a>1.0.0-dev.3/<a href="#id1"><span class="problematic" id="id2">jobson_</span></a>1.0.0-dev.3_all.deb
+dpkg -i <a href="#id3"><span class="problematic" id="id4">jobson_</span></a>1.0.0-dev.3_all.deb  # contains dependencies on (e.g.) java
+apt-get -f install  # resolves dependencies
+</pre>
 </div>
 <div class="section" id="osx-linux-any">
 <h2>OSX/Linux (any)<a class="headerlink" href="#osx-linux-any" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">jobson</span></code> project produces a tarball containing all assets needed
 to run jobson on a unix-like OS.</p>
 <p><strong>Note</strong>: You must have <code class="docutils literal notranslate"><span class="pre">java</span></code> (8+) installed on your system in order to run <code class="docutils literal notranslate"><span class="pre">jobson</span></code></p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>wget JOBSON_NIX
-tar xvf JOBSON_NIX
-bin JOBSON_NIX/bin/jobson
+<pre class="literal-block">
+wget <a class="reference external" href="https://github.com/adamkewley/jobson-1.0-throwaway/releases/download/">https://github.com/adamkewley/jobson-1.0-throwaway/releases/download/</a>1.0.0-dev.3/jobson-nix-1.0.0-dev.3.tar.gz
+tar xvf jobson-nix-1.0.0-dev.3.tar.gz
 
-# optional: softlink into /usr/local/bin, so it&#39;s on the path
-ln -s JOBSON_NIX/bin/jobson /usr/local/bin/jobson
-
-# (or) optional: add to ~/.bashrc
+# optional: add to ~/.bashrc
 export PATH=$PATH:/location/of/unpacked/tarball/bin
-</pre></div>
-</div>
+</pre>
 </div>
 <div class="section" id="docker">
 <h2>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">jobson</span></code> project builds a Docker image that pre-integrates
-<code class="docutils literal notranslate"><span class="pre">jobson</span></code> and <code class="docutils literal notranslate"><span class="pre">jobson-ui</span></code> (with <code class="docutils literal notranslate"><span class="pre">nginx</span></code>) together.</p>
-<p>TODO: docker details.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">jobson</span></code> project builds a Docker image that pre-integrates <code class="docutils literal notranslate"><span class="pre">jobson</span></code> and <code class="docutils literal notranslate"><span class="pre">jobson-ui</span></code> (with <code class="docutils literal notranslate"><span class="pre">nginx</span></code>) together.
+By default, it will create a demo workspace at <cite>/home/jobson/</cite> inside the container and listen on port 80:</p>
+<pre class="literal-block">
+docker run --name default-container -p 80:80 adamkewley/jobson-1.0.0-throwaway:1.0.0-dev.3
+</pre>
+<p>It’s recommended that you host the workspace outside the container, so that you can backup job data, upgrade the image,
+etc. The easiest way to do this is to copy the default workspace out of the container and create a new container with
+a volume mount:</p>
+<pre class="literal-block">
+# copy out the container's workspace
+docker run --name tmp-jobson-container -d adamkewley/jobson-1.0.0-throwaway:1.0.0-dev.3docker cp tmp-jobson-container:/home/jobson /host/path/jobson
+docker container rm -f tmp-jobson-container
+
+# boot a container that uses the out-of-container workspace
+docker run --name jobson-container -p 80:80 -v /host/path/jobson:/home/jobson:rw -d adamkewley/jobson-1.0.0-throwaway:1.0.0-dev.3
+</pre>
 </div>
 <div class="section" id="windows">
 <h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
@@ -206,9 +214,9 @@ windows. However, unofficial reports do state that it works on windows
 if you manually run the <code class="docutils literal notranslate"><span class="pre">jobson-x.x.x.jar</span></code> file:</p>
 <ul class="simple">
 <li>Download and install <code class="docutils literal notranslate"><span class="pre">java</span></code></li>
-<li>Download jobson unix tarball from releases (TODO)</li>
-<li>Unpack somewhere (e.g. DIR TODO)</li>
-<li>Run the jobson CLI with <code class="docutils literal notranslate"><span class="pre">java</span> <span class="pre">-jar</span> <span class="pre">DIR/share/jobson/java/jobson-x.x.x.jar</span> <span class="pre">CMD</span></code></li>
+<li>Download jobson unix tarball from <a class="reference external" href="https://github.com/adamkewley/jobson-1.0-throwaway/releases/">releases</a></li>
+<li>Unpack somewhere (e.g. in <code class="docutils literal notranslate"><span class="pre">DIR</span></code>)</li>
+<li>Run the jobson CLI with <code class="docutils literal notranslate"><span class="pre">java</span> <span class="pre">-jar</span> <span class="pre">DIR/share/jobson/java/jobson-x.x.x.jar</span></code></li>
 </ul>
 </div>
 </div>

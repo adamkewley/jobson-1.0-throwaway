@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How It Works &mdash; jobson-docs  documentation</title>
+  <title>How It Works &mdash; jobson-docs 1.0.0-dev.3 documentation</title>
   
 
   
@@ -95,7 +95,6 @@
 <li class="toctree-l1"><a class="reference external" href="apidocs/index.html#://">HTTP API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface (Jobson UI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Developer’s Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Usage</a></li>
 </ul>
 
             
@@ -215,9 +214,6 @@ spec would be:</p>
 <li>Execute the job as a subprocess</li>
 <li>Persist the job’s output.</li>
 </ul>
-<p>With this approach, admins can add new jobs to Jobson in a familiar
-markup language (YAML) without <em>also</em> needing to know about specific
-execution languages, HTTP APIs, persistence, etc.</p>
 </div>
 <div class="section" id="execution-subprocesses">
 <h2>Execution: Subprocesses<a class="headerlink" href="#execution-subprocesses" title="Permalink to this headline">¶</a></h2>
@@ -232,9 +228,6 @@ continuous outputs via pipes (e.g. <code class="docutils literal notranslate"><s
 <li>Exits with an exit code</li>
 <li>Produces files as a side-effect</li>
 </ul>
-<p>With this approach, Jobson is able to execute any application, written
-in any langugage, with sandboxing that is guaranteed by the host
-operating system.</p>
 </div>
 <div class="section" id="client-interaction-http-websockets">
 <h2>Client Interaction: HTTP/Websockets<a class="headerlink" href="#client-interaction-http-websockets" title="Permalink to this headline">¶</a></h2>
