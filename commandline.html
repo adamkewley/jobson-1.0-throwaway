@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Command-Line Interface &mdash; jobson-docs 1.0.0-dev.4 documentation</title>
+  <title>Command-Line Interface &mdash; jobson-docs 1.0.0-dev.5 documentation</title>
   
 
   
@@ -84,7 +84,9 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Command-Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-cli-via-a-docker-container">Running the CLI via a Docker Container</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#viewing-help-with-help">Viewing Help with <code class="docutils literal notranslate"><span class="pre">--help</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-user-basic-auth">Adding a new User (basic auth)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="server-configuration.html">Server Configuration</a></li>
@@ -163,6 +165,15 @@
 commands aimed at day-to-day development and administration of Jobson.
 The CLI is available once jobson has been
 <a class="reference external" href="install.html">installed</a>.</p>
+<div class="section" id="running-the-cli-via-a-docker-container">
+<h2>Running the CLI via a Docker Container<a class="headerlink" href="#running-the-cli-via-a-docker-container" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">jobson</span></code> CLI can be used from outside a container by first entering the workspace (<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/home/jobson</span></code>) then
+executing the commands. For example, adding a <code class="docutils literal notranslate"><span class="pre">basic</span></code> auth user via a container:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">start</span> <span class="n">jobson</span><span class="o">-</span><span class="n">container</span>
+<span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">ti</span> <span class="n">jobson</span><span class="o">-</span><span class="n">container</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;cd /home/jobson &amp;&amp; jobson users add config.yml -p PASSWORD USERNAME&quot;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="viewing-help-with-help">
 <h2>Viewing Help with <code class="docutils literal notranslate"><span class="pre">--help</span></code><a class="headerlink" href="#viewing-help-with-help" title="Permalink to this headline">¶</a></h2>
 <p>Pass the <code class="docutils literal notranslate"><span class="pre">--help</span></code> argument to <code class="docutils literal notranslate"><span class="pre">jobson</span></code> to view the help
@@ -192,7 +203,27 @@ optional arguments:
   -h, --help             show this help message and exit
 </pre></div>
 </div>
-<p><strong>TODO: More CLI documentation</strong></p>
+</div>
+<div class="section" id="adding-a-new-user-basic-auth">
+<h2>Adding a new User (basic auth)<a class="headerlink" href="#adding-a-new-user-basic-auth" title="Permalink to this headline">¶</a></h2>
+<p>If Jobson is configured to use <code class="docutils literal notranslate"><span class="pre">basic</span></code> authentication in the <a class="reference external" href="server-configuration.html">server config</a> :</p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># config.yml</span>
+<span class="n">authentication</span><span class="p">:</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="n">basic</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">users</span></code> subcommand can be used to add new users to the system:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ jobson users add config.yml -p PASSWORD USERNAME
+</pre></div>
+</div>
+<p>This command appends an entry to the file pointed at by the <code class="docutils literal notranslate"><span class="pre">users.file</span></code>
+setting in the server config (<code class="docutils literal notranslate"><span class="pre">config.yml</span></code>). The entry is hashed in a
+similar way to how Linux passwords are hashed, preventing the password from
+being read:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat users
+USERNAME:basic:$6$XbPs6uOo$7AYilI2.iL84jLxXqb10vnzGygtXWCy1W27EUU7AhbKrDrtHGSI1jTRCIlUUmMhDzdwZ0sS7vm7iBrJ1VV6JB.
+</pre></div>
+</div>
 </div>
 </div>
 

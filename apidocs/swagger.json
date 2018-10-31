@@ -1015,6 +1015,15 @@
         "number" : {
           "type" : "boolean"
         },
+        "textual" : {
+          "type" : "boolean"
+        },
+        "boolean" : {
+          "type" : "boolean"
+        },
+        "binary" : {
+          "type" : "boolean"
+        },
         "valueNode" : {
           "type" : "boolean"
         },
@@ -1052,15 +1061,6 @@
           "type" : "boolean"
         },
         "bigInteger" : {
-          "type" : "boolean"
-        },
-        "textual" : {
-          "type" : "boolean"
-        },
-        "boolean" : {
-          "type" : "boolean"
-        },
-        "binary" : {
           "type" : "boolean"
         },
         "array" : {
