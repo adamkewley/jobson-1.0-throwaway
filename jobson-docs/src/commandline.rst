@@ -6,6 +6,21 @@ commands aimed at day-to-day development and administration of Jobson.
 The CLI is available once jobson has been
 `installed <install.html>`__.
 
+
+
+Running the CLI via a Docker Container
+--------------------------------------
+
+The ``jobson`` CLI can be used from outside a container by first entering the workspace (``cd /home/jobson``) then
+executing the commands. For example, adding a ``basic`` auth user via a container:
+
+.. code:: bash
+
+      docker start jobson-container
+      docker exec -ti jobson-container sh -c "cd /home/jobson && jobson users add config.yml -p PASSWORD USERNAME"
+
+
+
 Viewing Help with ``--help``
 ----------------------------
 
@@ -45,6 +60,14 @@ The ``--help`` argument also works with the other subcommands:
 Adding a new User (basic auth)
 ------------------------------
 
+If Jobson is configured to use ``basic`` authentication in the `server config <server-configuration.html>`_ :
+
+.. code:: yaml
+
+    # config.yml
+    authentication:
+      type: basic
+
 The ``users`` subcommand can be used to add new users to the system:
 
 .. code:: bash
@@ -61,8 +84,3 @@ being read:
 
     $ cat users
     USERNAME:basic:$6$XbPs6uOo$7AYilI2.iL84jLxXqb10vnzGygtXWCy1W27EUU7AhbKrDrtHGSI1jTRCIlUUmMhDzdwZ0sS7vm7iBrJ1VV6JB.
-
-
-      
-**TODO: More CLI documentation**
-
