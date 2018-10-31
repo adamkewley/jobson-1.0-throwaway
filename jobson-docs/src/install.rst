@@ -54,6 +54,7 @@ a volume mount:
 
       # copy out the container's workspace
       docker run --name tmp-jobson-container -d adamkewley/jobson-1.0.0-throwaway:\ |release|\
+
       docker cp tmp-jobson-container:/home/jobson /host/path/jobson
       docker container rm -f tmp-jobson-container
 
