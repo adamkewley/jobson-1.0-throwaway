@@ -14,11 +14,6 @@
     <version>1.0.0-dev.4</version>
     <packaging>pom</packaging>
 
-    <properties>
-        <version.swaggerui>3.19.3</version.swaggerui>
-        <version.jobsonswagger>1.0.0-dev.4</version.jobsonswagger>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.github.jobson</groupId>
@@ -39,7 +34,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>copy-swagger-json-dependency-ready-for-compilation</id>
@@ -67,7 +61,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
                 <executions>
 
                     <execution>
@@ -130,7 +123,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>attach-output-tarball-as-build-artifact</id>
